@@ -1,0 +1,1016 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GECI - Tableau de bord</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS GECI -->
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body class="geci-body">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="geci-sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="geci-logo">
+
+            <div class="geci-logo-icon">
+                G
+            </div>
+
+            <div>
+
+                <strong>GECI</strong>
+
+                <span>
+                    << Soyons plus proche >> 
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- MENU -->
+
+        <nav class="geci-navigation">
+
+
+            <!-- ACCUEIL -->
+
+            <a href="{% url 'accueil' %}"
+               class="geci-menu active">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-house"></i>
+                </span>
+
+                <span>
+                    Accueil
+                </span>
+
+            </a>
+
+
+            <!-- EVENEMENTS -->
+
+            <a href="{% url 'liste_evenements' %}"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </span>
+
+                <span>
+                    Événements
+                </span>
+
+            </a>
+
+
+            <!-- ANNONCES -->
+
+            <a href="{% url 'liste_annonces' %}"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </span>
+
+                <span>
+                    Annonces
+                </span>
+
+            </a>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </span>
+
+                <span>
+                    Notifications
+                </span>
+
+                
+
+            </a>
+
+
+            <!-- UTILISATEURS -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-users"></i>
+                </span>
+
+                <span>
+                    Utilisateurs
+                </span>
+
+            </a>
+
+
+            <!-- STATISTIQUES -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-chart-column"></i>
+                </span>
+
+                <span>
+                    Statistiques
+                </span>
+
+            </a>
+
+
+            <!-- PARAMETRES -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-gear"></i>
+                </span>
+
+                <span>
+                    Paramètres
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- FOOTER SIDEBAR -->
+
+        
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENU PRINCIPAL
+    ====================================================== -->
+
+    <main class="geci-main">
+
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="geci-topbar">
+
+
+            <!-- RECHERCHE -->
+
+
+<div class="geci-search">
+
+                <span>
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </span>
+
+                <input
+                    type="text"
+                    placeholder="Rechercher un événement, une annonce..."
+                >
+
+            </div>
+
+
+
+            <!-- UTILISATEUR -->
+
+            <div class="geci-user-area">
+
+
+                <!-- NOTIFICATION -->
+
+                <div class="geci-bell">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                
+
+                </div>
+
+
+
+                <!-- PHOTO PROFIL -->
+
+                {% if utilisateur and utilisateur.photo %}
+
+                    <img
+                        class="geci-user-photo"
+                        src="{{ utilisateur.photo.url }}"
+                        alt="Photo de profil"
+                    >
+
+                {% else %}
+
+                    <div class="geci-user-photo geci-user-default">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- INFORMATIONS UTILISATEUR -->
+
+                <div class="geci-user-info">
+
+
+                    {% if utilisateur %}
+
+                        <strong>
+
+                            {{ utilisateur.prenom }}
+                            {{ utilisateur.nom }}
+
+                        </strong>
+
+                        <span>
+
+                            {{ utilisateur.role }}
+
+                        </span>
+
+
+                    {% else %}
+
+                        <strong>
+                         Kamdem Jores
+                        </strong>
+
+                        <span>
+                            Administrateur
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- FLECHE -->
+
+                <span class="geci-chevron">
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             BIENVENUE
+        ================================================== -->
+
+        <section class="geci-welcome">
+
+
+            <!-- MESSAGE -->
+
+            <div class="geci-welcome-message">
+
+
+                <div class="geci-welcome-icon">
+
+                    <i class="fa-solid fa-hand"></i>
+
+                </div>
+
+
+                <div>
+
+
+                    <h1>
+
+                        Bonjour,
+
+                        {% if utilisateur %}
+
+                            {{ utilisateur.prenom }}
+
+                        {% else %}
+
+                            Jores
+
+                        {% endif %}
+
+                        !
+
+                    </h1>
+
+
+                    <p>
+
+                        Bienvenue sur la plateforme de Gestion des Événements
+                        et de Communication Interne "GECI".
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DATE -->
+
+            <div class="geci-date-card">
+
+
+                <span class="geci-calendar-icon">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </span>
+
+
+                <div>
+
+                    <strong id="geci-current-date"></strong>
+
+                    <span id="geci-current-time"></span>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             STATISTIQUES
+        ================================================== -->
+
+        <section class="geci-statistics">
+
+
+
+            <!-- EVENEMENTS -->
+
+            <div class="geci-stat-card">
+
+
+                <div class="geci-stat-icon blue">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </div>
+
+
+                <strong>
+
+                    {{ nombre_evenements }}
+
+                </strong>
+
+
+                <span>
+
+                    Événements à venir
+
+
+</span>
+
+
+                <a href="{% url 'liste_evenements' %}">
+
+                    Voir tous →
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- ANNONCES -->
+
+            <div class="geci-stat-card">
+
+
+                <div class="geci-stat-icon green">
+
+                    <i class="fa-solid fa-bullhorn"></i>
+
+                </div>
+
+
+                <strong>
+
+                    {{ nombre_annonces }}
+
+                </strong>
+
+
+                <span>
+
+                    Annonces publiées
+
+                </span>
+
+
+                <a href="{% url 'liste_annonces' %}">
+
+                    Voir toutes →
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div class="geci-stat-card">
+
+
+                <div class="geci-stat-icon purple">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                </div>
+
+
+                <strong>
+
+                    {{ nombre_notifications }}
+
+                </strong>
+
+
+                <span>
+
+                    Notifications non lues
+
+                </span>
+
+
+                <a href="#">
+
+                    Voir toutes →
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- UTILISATEURS -->
+
+            <div class="geci-stat-card">
+
+
+                <div class="geci-stat-icon cyan">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+
+                <strong>
+
+                    {{ nombre_utilisateurs }}
+
+                </strong>
+
+
+                <span>
+
+                    Utilisateurs
+
+                </span>
+
+
+                <a href="#">
+
+                    Voir tous →
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             EVENEMENTS A VENIR
+        ================================================== -->
+
+        <section class="geci-section">
+
+
+            <!-- TITRE -->
+
+            <div class="geci-section-header">
+
+
+                <div>
+
+
+                    <h2>
+
+                        <span>
+
+                            <i class="fa-solid fa-calendar-days"></i>
+
+                        </span>
+
+                        Événements à venir
+
+                    </h2>
+
+
+                    <p>
+
+                        Ne manquez pas les prochains événements
+                        de l'entreprise.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- NOUVEL EVENEMENT -->
+
+                <a
+                    href="{% url 'creer_evenement' %}"
+                    class="geci-primary-button"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    &nbsp;
+
+                    Nouvel événement
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- CARTES EVENEMENTS -->
+
+            <div class="geci-events-grid">
+
+
+                {% for evenement in evenements_a_venir %}
+
+
+                    <article class="geci-event-card">
+
+
+                        <!-- IMAGE -->
+
+                        <div class="geci-event-image">
+
+
+                            {% if evenement.image %}
+
+                                <img
+                                    src="{{ evenement.image.url }}"
+                                    alt="{{ evenement.titre }}"
+                                >
+
+                            {% else %}
+
+                                <div class="geci-event-no-image">
+
+                                    <i class="fa-solid fa-calendar-days"></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+
+                            <!-- DATE -->
+
+                            <div class="geci-event-date">
+
+
+                                <strong>
+
+                                    {{ evenement.date|date:"d" }}
+
+                                </strong>
+
+
+                                <span>
+
+                                    {{ evenement.date|date:"M"|upper }}
+
+                                </span>
+
+
+                            </div>
+
+
+<!-- STATUT -->
+
+                            <span
+                                class="geci-event-status status-{{ evenement.statut }}"
+                            >
+
+                                {{ evenement.get_statut_display }}
+
+                            </span>
+
+
+                        </div>
+
+
+
+                        <!-- CONTENU -->
+
+                        <div class="geci-event-content">
+
+
+                            <h3>
+
+                                {{ evenement.titre }}
+
+                            </h3>
+
+
+
+                            <p>
+
+                                {{ evenement.description|truncatechars:105 }}
+
+                            </p>
+
+
+
+                            <!-- DETAILS -->
+
+                            <div class="geci-event-details">
+
+
+                                <span>
+
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    {{ evenement.heure|time:"H:i" }}
+
+                                </span>
+
+
+                                <span>
+
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    {{ evenement.lieu }}
+
+                                </span>
+
+
+                            </div>
+
+
+
+                            <!-- DETAILS -->
+
+                            <a
+                                href="#"
+                                class="geci-details-button"
+                            >
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                &nbsp;
+
+                                Voir les détails
+
+                            </a>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                {% empty %}
+
+
+                    <div class="geci-empty">
+
+                        <i class="fa-solid fa-calendar-xmark"></i>
+
+                        <p>
+                            Aucun événement à venir.
+                        </p>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ANNONCES RECENTES
+        ================================================== -->
+
+        <section class="geci-section geci-announcements-section">
+
+
+            <!-- TITRE -->
+
+            <div class="geci-section-header">
+
+
+                <div>
+
+
+                    <h2>
+
+                        <span>
+
+                            <i class="fa-solid fa-bullhorn"></i>
+
+                        </span>
+
+                        Annonces récentes
+
+                    </h2>
+
+
+                    <p>
+
+                        Restez informé des dernières communications.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- NOUVELLE ANNONCE -->
+
+                <a
+                    href="{% url 'liste_annonces' %}"
+                    class="geci-primary-button"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    &nbsp;
+
+                    Nouvelle annonce
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- ANNONCES -->
+
+            <div class="geci-announcements">
+
+
+                {% for annonce in annonces_recentes %}
+
+
+                    <article class="geci-announcement-card">
+
+
+                        <!-- ICONE -->
+
+                        <div class="geci-announcement-icon">
+
+                            <i class="fa-solid fa-bullhorn"></i>
+
+                        </div>
+
+
+
+                        <!-- CONTENU -->
+
+                        <div class="geci-announcement-content">
+
+
+                            <h3>
+
+                                {{ annonce.titre }}
+
+                            </h3>
+
+
+                            <p>
+
+                                {{ annonce.contenu|truncatechars:125 }}
+
+                            </p>
+
+
+
+                            <!-- FOOTER -->
+
+                            <div class="geci-announcement-footer">
+
+
+<span>
+
+                                    <i class="fa-regular fa-calendar"></i>
+
+                                    {{ annonce.date_publication|date:"d/m/Y" }}
+
+                                </span>
+
+
+                                <span class="geci-published">
+
+                                    {{ annonce.get_statut_display }}
+
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- LIRE -->
+
+                        <a
+                            href="#"
+                            class="geci-read-more"
+                        >
+
+                            Lire la suite →
+
+                        </a>
+
+
+                    </article>
+
+
+                {% empty %}
+
+
+                    <div class="geci-empty">
+
+                        <i class="fa-solid fa-bullhorn"></i>
+
+                        <p>
+                            Aucune annonce récente.
+                        </p>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         DATE ET HEURE
+    ====================================================== -->
+
+    <script>
+
+
+        function afficherDateHeure() {
+
+
+            const maintenant = new Date();
+
+
+            const options = {
+
+                weekday: 'long',
+
+                day: 'numeric',
+
+                month: 'long',
+
+                year: 'numeric'
+
+            };
+
+
+            document.getElementById(
+                'geci-current-date'
+            ).textContent = maintenant.toLocaleDateString(
+                'fr-FR',
+                options
+            );
+
+
+            document.getElementById(
+                'geci-current-time'
+            ).textContent = maintenant.toLocaleTimeString(
+                'fr-FR',
+                {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }
+            );
+
+
+        }
+
+
+        afficherDateHeure();
+
+
+        setInterval(
+            afficherDateHeure,
+            60000
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

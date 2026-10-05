@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GECI - Annonces</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Barre latérale -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            GECI
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a href="{% url 'accueil' %}">🏠 Accueil</a>
+            </li>
+
+            <li>
+                <a href="{% url 'liste_evenements' %}">📅 Événements</a>
+            </li>
+
+            <li>
+                <a href="{% url 'liste_annonces' %}">📢 Annonces</a>
+            </li>
+
+            <li>
+                <a href="#">🔔 Notifications</a>
+            </li>
+
+            <li>
+                <a href="#">👥 Utilisateurs</a>
+            </li>
+
+            <li>
+                <a href="#">📊 Statistiques</a>
+            </li>
+
+            <li>
+                <a href="#">⚙️ Paramètres</a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <!-- Contenu principal -->
+    <main class="contenu">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Annonces</h1>
+                <p>Communications internes de l'entreprise</p>
+            </div>
+            <a href="{% url 'creer_annonce' %}" class="bouton-ajouter">
+    + Nouvelle annonce
+</a>
+
+        </div>
+
+
+        <section class="liste-annonces">
+
+            {% if annonces %}
+
+                {% for annonce in annonces %}
+
+                    <div class="annonce">
+
+                        <h2>{{ annonce.titre }}</h2>
+
+                        <p>
+                            {{ annonce.contenu }}
+                        </p>
+
+                        <div class="annonce-infos">
+
+                            <span>
+                                📅 {{ annonce.date_publication|date:"d/m/Y H:i" }}
+                            </span>
+
+                            <span>
+                                📢 {{ annonce.get_statut_display }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="aucune-annonce">
+
+                    <h2>📢 Aucune annonce</h2>
+
+                    <p>
+                        Aucune annonce n'a encore été publiée.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

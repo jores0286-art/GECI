@@ -1,0 +1,586 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GECI - Événements</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body class="geci-body">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="geci-sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="geci-logo">
+
+            <div class="geci-logo-icon">
+                G
+            </div>
+
+            <div>
+
+                <strong>GECI</strong>
+
+                <span>
+                    << Soyons plus proche >>
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MENU -->
+
+        <nav class="geci-navigation">
+
+
+            <!-- ACCUEIL -->
+
+            <a href="{% url 'accueil' %}"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-house"></i>
+                </span>
+
+                <span>
+                    Accueil
+                </span>
+
+            </a>
+
+
+
+            <!-- EVENEMENTS -->
+
+            <a href="{% url 'liste_evenements' %}"
+               class="geci-menu active">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </span>
+
+                <span>
+                    Événements
+                </span>
+
+            </a>
+
+
+
+            <!-- ANNONCES -->
+
+            <a href="{% url 'liste_annonces' %}"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </span>
+
+                <span>
+                    Annonces
+                </span>
+
+            </a>
+
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </span>
+
+                <span>
+                    Notifications
+                </span>
+
+                
+
+            </a>
+
+
+
+            <!-- UTILISATEURS -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-users"></i>
+                </span>
+
+                <span>
+                    Utilisateurs
+                </span>
+
+            </a>
+
+
+
+            <!-- STATISTIQUES -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-chart-column"></i>
+                </span>
+
+                <span>
+                    Statistiques
+                </span>
+
+            </a>
+
+
+
+            <!-- PARAMETRES -->
+
+            <a href="#"
+               class="geci-menu">
+
+                <span class="geci-menu-icon">
+                    <i class="fa-solid fa-gear"></i>
+                </span>
+
+                <span>
+                    Paramètres
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="geci-sidebar-footer">
+                 <br>
+                 <br>
+                 
+          << Soyons 
+            plus 
+            proche >>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTENU
+    ====================================================== -->
+
+    <main class="geci-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="geci-topbar">
+
+
+            <div class="geci-search">
+
+                <span>
+
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+                </span>
+
+                <input
+                    type="text"
+                    placeholder="Rechercher un événement..."
+                >
+
+            </div>
+
+
+
+            <div class="geci-user-area">
+
+
+                <div class="geci-bell">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    <span>
+                        3
+                    </span>
+
+                </div>
+
+
+                {% if utilisateur and utilisateur.photo %}
+
+                    <img
+                        class="geci-user-photo"
+                        src="{{ utilisateur.photo.url }}"
+                        alt="Photo de profil"
+                    >
+
+                {% else %}
+
+                    <div class="geci-user-photo geci-user-default">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="geci-user-info">
+
+                    {% if utilisateur %}
+
+                        <strong>
+                            {{ utilisateur.prenom }}
+                            {{ utilisateur.nom }}
+                        </strong>
+
+                        <span>
+                            {{ utilisateur.role }}
+                        </span>
+
+                    {% else %}
+
+                        <strong>
+                            Jores Kamdem
+                        </strong>
+
+                        <span>
+                            Administrateur
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <span class="geci-chevron">
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             PAGE EVENEMENTS
+        ================================================== -->
+
+        <section class="geci-page-content">
+
+
+            <!-- EN-TÊTE -->
+
+            <div class="geci-page-header">
+
+
+                <div>
+
+                    <h1>
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        Événements
+
+                    </h1>
+
+
+                    <p>
+
+                        Consultez et gérez les événements
+                        de l'entreprise.
+
+                    </p>
+
+                </div>
+
+
+
+                <a
+                    href="{% url 'creer_evenement' %}"
+                    class="geci-primary-button"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Nouvel événement
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- FILTRES -->
+
+            <div class="geci-event-tools">
+
+
+                <div class="geci-event-search">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        placeholder="Rechercher un événement..."
+                    >
+
+                </div>
+
+
+                <select>
+
+                    <option>
+                        Tous les statuts
+                    </option>
+
+                    <option value="a_venir">
+                        À venir
+                    </option>
+
+                    <option value="en_cours">
+                        En cours
+                    </option>
+
+                    <option value="termine">
+                        Terminé
+                    </option>
+
+                    <option value="annule">
+                        Annulé
+                    </option>
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LISTE DES EVENEMENTS
+            ================================================== -->
+
+            <div class="geci-events-grid">
+
+
+                {% for evenement in evenements %}
+
+
+                    <article class="geci-event-card">
+
+
+                        <!-- IMAGE -->
+
+
+<div class="geci-event-image">
+
+
+                            {% if evenement.image %}
+
+                                <img
+                                    src="{{ evenement.image.url }}"
+                                    alt="{{ evenement.titre }}"
+                                >
+
+                            {% else %}
+
+                                <div class="geci-event-no-image">
+
+                                    <i class="fa-solid fa-calendar-days"></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+
+                            <!-- DATE -->
+
+                            <div class="geci-event-date">
+
+                                <strong>
+                                    {{ evenement.date|date:"d" }}
+                                </strong>
+
+                                <span>
+                                    {{ evenement.date|date:"M"|upper }}
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- STATUT -->
+
+                            <span
+                                class="geci-event-status status-{{ evenement.statut }}"
+                            >
+
+                                {{ evenement.get_statut_display }}
+
+                            </span>
+
+
+                        </div>
+
+
+
+                        <!-- INFORMATIONS -->
+
+                        <div class="geci-event-content">
+
+
+                            <h3>
+
+                                {{ evenement.titre }}
+
+                            </h3>
+
+
+                            <p>
+
+                                {{ evenement.description|truncatechars:120 }}
+
+                            </p>
+
+
+
+                            <!-- DETAILS -->
+
+                            <div class="geci-event-details">
+
+
+                                <span>
+
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    {{ evenement.heure|time:"H:i" }}
+
+                                </span>
+
+
+                                <span>
+
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    {{ evenement.lieu }}
+
+                                </span>
+
+
+                            </div>
+
+
+
+                            <!-- BOUTON -->
+
+                            <a
+                                href="#"
+                                class="geci-details-button"
+                            >
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                Voir les détails
+
+                            </a>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                {% empty %}
+
+
+                    <div class="geci-empty">
+
+                        <i class="fa-solid fa-calendar-xmark"></i>
+
+                        <h2>
+                            Aucun événement
+                        </h2>
+
+                        <p>
+                            Aucun événement n'a encore été enregistré.
+                        </p>
+
+
+                        <a
+                            href="{% url 'creer_evenement' %}"
+                            class="geci-primary-button"
+                        >
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            Créer un événement
+
+                        </a>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</body>
+
+</html>
